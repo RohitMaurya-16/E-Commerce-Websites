@@ -1,0 +1,28 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<div class="profile-page">
+    <!-- Sidebar Navigation -->
+    <div class="profile-sidebar">
+        <div class="profile-user-card">
+            <img src="{{ user.profile.image.url }}" alt="Profile Picture" class="profile-picture">
+            <h3 class="profile-username">{{ user.username }}</h3>
+            <p class="profile-email">{{ user.email }}</p>
+        </div>
+        <nav class="profile-nav">
+            <a href="{% url 'shop:profile_info' %}" class="nav-item {% if request.resolver_match.url_name == 'profile_info' %}active{% endif %}">👤 Basic Info</a>
+            <a href="{% url 'shop:profile_orders' %}" class="nav-item {% if request.resolver_match.url_name == 'profile_orders' %}active{% endif %}">🛍️ My Orders</a>
+            <a href="{% url 'shop:profile_payments' %}" class="nav-item {% if request.resolver_match.url_name == 'profile_payments' %}active{% endif %}">💳 Payment Methods</a>
+            <a href="{% url 'shop:profile_addresses' %}" class="nav-item {% if request.resolver_match.url_name == 'profile_addresses' %}active{% endif %}">📍 My Addresses</a>
+            <a href="{% url 'shop:profile_wishlist' %}" class="nav-item {% if request.resolver_match.url_name == 'profile_wishlist' %}active{% endif %}">❤️ My Wishlist</a>
+            <a href="{% url 'shop:profile_security' %}" class="nav-item {% if request.resolver_match.url_name == 'profile_security' %}active{% endif %}">🔒 Security</a>
+            <a href="{% url 'shop:profile_preferences' %}" class="nav-item {% if request.resolver_match.url_name == 'profile_preferences' %}active{% endif %}">⚙️ Preferences</a>
+        </nav>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="profile-content">
+        {% block profile_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,17 @@
+<div class="product-card {% if featured %}featured{% endif %}">
+  <div class="product-card-top">
+    <div class="product-image-container">
+      {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+      {% else %}
+        <img src="https://via.placeholder.com/70x70?text=No+Image" alt="No Image">
+      {% endif %}
+    </div>
+    <div class="product-info">
+      <div class="product-title">{{ product.name }}</div>
+      <div class="product-desc">{{ product.description|truncatewords:18 }}</div>
+      <div class="product-price">${{ product.price }}</div>
+    </div>
+  </div>
+  <a href="{% url 'add_to_cart' product.id %}" class="add-to-cart-btn">Add to Cart</a>
+</div> 

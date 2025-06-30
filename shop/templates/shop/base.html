@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Site</title>
+    <link rel="stylesheet" href="{% static 'shop/style.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/buttons/_base.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/buttons/nav_link.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/buttons/login.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/buttons/register.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/buttons/add_to_cart.css' %}">
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <a href="{% url 'product_list' %}" class="nav-btn nav-link-btn">🏠<span class="nav-label">Home</span></a>
+            <a href="{% url 'cart' %}" class="nav-btn nav-link-btn">🛒<span class="nav-label">Cart</span></a>
+        </div>
+        <div class="nav-right">
+            {% if user.is_authenticated %}
+                <a href="{% url 'shop:profile_info' %}" class="nav-btn nav-link-btn">👤<span class="nav-label">Profile</span></a>
+                <form action="{% url 'logout' %}" method="post" class="nav-logout-form">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-btn nav-link-btn">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="nav-btn login-btn">Login</a>
+                <a href="{% url 'register' %}" class="nav-btn register-btn">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+    <hr>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    <script src="{% static 'shop/script.js' %}"></script>
+</body>
+</html> 

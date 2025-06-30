@@ -1,0 +1,39 @@
+{% extends 'shop/profile/base.html' %}
+
+{% block profile_content %}
+<div class="content-card">
+    <div class="card-header">
+        <h3>My Orders</h3>
+    </div>
+    <div class="card-body">
+        {% if orders %}
+            <div class="order-list">
+                {% for order in orders %}
+                    <div class="order-item">
+                        <div class="order-item-thumbnail">
+                            {% if order.items.first.product.image %}
+                                <img src="{{ order.items.first.product.image.url }}" alt="Product Image">
+                            {% else %}
+                                <img src="https://via.placeholder.com/50x50?text=N/A" alt="No Image">
+                            {% endif %}
+                        </div>
+                        <div class="order-item-details">
+                            <span class="order-product-name">{{ order.items.first.product.name }} {% if order.total_items > 1 %}<span class="more-items">+{{ order.total_items|add:"-1" }} more</span>{% endif %}</span>
+                            <span class="order-id">Order #{{ order.id }}</span>
+                        </div>
+                        <div class="order-item-price">
+                            ${{ order.items.first.product.price }}
+                        </div>
+                        <div class="order-item-status">
+                            <span class="status-badge status-{{ order.status }}">{{ order.get_status_display }}</span>
+                        </div>
+                        <button class="view-details-btn">View Details</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>You haven't placed any orders yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 

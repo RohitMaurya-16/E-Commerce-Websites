@@ -1,0 +1,20 @@
+/* Base styles for all nav buttons */
+.nav-btn {
+  padding: 0.7em 1.5em;
+  border-radius: 10px;
+  font-size: 1.05em;
+  font-weight: 700;
+  border: none;
+  letter-spacing: 0.5px;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  text-decoration: none;
+}
+
+.nav-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+} 

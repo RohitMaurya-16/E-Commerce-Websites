@@ -1,0 +1,165 @@
+.product-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  perspective: 1500px;
+  transform-style: preserve-3d;
+  transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  z-index: 1;
+}
+
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.8s ease, background 0.8s ease;
+}
+
+.product-card.active {
+  transform: translateY(-15px) rotateX(8deg) scale(1.02);
+  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.25);
+}
+
+.product-card.active::before {
+  opacity: 1;
+  animation: colorPulse 8s infinite alternate;
+}
+
+@keyframes colorPulse {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.add-to-cart-btn {
+  width: 100%;
+  align-self: center;
+  margin-top: auto;
+  margin-bottom: 0;
+  background: linear-gradient(90deg, #6366f1 0%, #14b8a6 100%);
+  color: #fff;
+  padding: 0.9em 2em;
+  border-radius: 14px;
+  font-size: 1.1em;
+  font-weight: 700;
+  box-shadow: 0 10px 30px rgba(99,102,241,0.25), 
+              0 4px 12px rgba(20,184,166,0.15),
+              inset 0 4px 8px rgba(255,255,255,0.4);
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  border: none;
+  text-shadow: 0 2px 8px rgba(99, 102, 241, 0.5);
+  letter-spacing: 0.8px;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  margin-top: 1.8em;
+  transform-style: preserve-3d;
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.add-to-cart-btn::before, .add-to-cart-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: 0.6s;
+  z-index: -1;
+}
+
+.add-to-cart-btn::after {
+  left: 100%;
+  transition-delay: 0.2s;
+}
+
+.add-to-cart-btn:hover {
+  background: linear-gradient(90deg, #14b8a6 0%, #6366f1 100%);
+  transform: translateY(-6px) scale(1.05) rotateY(12deg);
+  box-shadow: 0 20px 50px rgba(20,184,166,0.3),
+              inset 0 4px 16px rgba(255,255,255,0.5);
+  animation: pulse 2s infinite;
+}
+
+.add-to-cart-btn:hover::before {
+  left: 100%;
+}
+
+.add-to-cart-btn:hover::after {
+  left: -100%;
+}
+
+.add-to-cart-btn:active {
+  transform: translateY(-2px) scale(0.98);
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.5); }
+  70% { box-shadow: 0 0 0 20px rgba(99, 102, 241, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+}
+
+/* Dynamic background effect based on product image */
+.product-card[data-bg-color] {
+  transition: background 1.2s ease;
+}
+
+.product-card.active[data-bg-color]::before {
+  background: var(--product-bg-color);
+  background-size: 200% 200%;
+  background-attachment: fixed;
+}
+
+/* Floating particles effect */
+.product-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at var(--x) var(--y), 
+              rgba(255,255,255,0.1) 0%, transparent 20%);
+  opacity: 0;
+  transition: opacity 0.6s;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.product-card:hover::after {
+  opacity: 1;
+}
+
+@media (max-width: 700px) {
+  .add-to-cart-btn { 
+    width: 100%; 
+    align-self: center; 
+    margin-bottom: 0; 
+    animation: none;
+  }
+  
+  .product-card:hover, .product-card.active {
+    transform: none;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .product-card::before, .product-card::after {
+    display: none;
+  }
+}

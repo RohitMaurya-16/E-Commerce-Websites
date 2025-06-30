@@ -1,0 +1,47 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+<h1>Products</h1>
+
+<!-- Category Filter -->
+<form method="get" class="category-filter">
+  <label for="category">Filter by Category:</label>
+  <select name="category" id="category" onchange="this.form.submit()">
+    <option value="">All</option>
+    {% for value, label in categories %}
+      <option value="{{ value }}" {% if selected_category == value %}selected{% endif %}>{{ label }}</option>
+    {% endfor %}
+  </select>
+</form>
+
+<!-- This block will render if we are on the 'All' products page and there are products -->
+{% if not selected_category and products %}
+  <!-- Featured Products Banner -->
+  <div class="featured-banner">
+    <h2>Featured Products</h2>
+    <div class="product-list">
+      {% for product in products|slice:":2" %}
+        {% include 'shop/_product_card.html' with product=product featured=True %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Main Product List -->
+  <div class="product-list">
+    {% for product in products|slice:"2:" %}
+      {% include 'shop/_product_card.html' with product=product %}
+    {% empty %}
+        <p style="text-align: center; width: 100%;">No other products available.</p>
+    {% endfor %}
+  </div>
+
+<!-- This block will render if a category is selected -->
+{% else %}
+  <div class="product-list">
+    {% for product in products %}
+      {% include 'shop/_product_card.html' with product=product %}
+    {% empty %}
+      <p style="text-align: center; width: 100%;">No products available in this category.</p>
+    {% endfor %}
+  </div>
+{% endif %}
+{% endblock %} 
